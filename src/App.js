@@ -1,8 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import web3 from './web3';
 import lottery from './lottery';
-import {useEffect,useRef,useState} from "react";
+import {useEffect,useState} from "react";
 
 
 function App() {
@@ -18,7 +17,7 @@ function App() {
   const [message,setMessage] = useState("")
   const [refresh,setRefresh] = useState(0) 
 
-  useEffect(() => {
+  useEffect((contract) => {
     const lookForManager = async() => {
       const managerF = await lottery.methods.manager().call();
       const playersF = await lottery.methods.getPlayers().call();
@@ -52,7 +51,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className = "App">
       <h2>Lottery Contract</h2>
       <p>
         Manager: {contract.manager}.
@@ -63,13 +62,16 @@ function App() {
         <h4>Want to try your luck</h4>
         <div>
           <label>Amount of Ether to enter</label>
-          <input onChange = {event => setValue(event.target.value)} value = {value}></input>
-          <button>Enter!</button>
+          <input onChange = {event => setValue(event.target.value)} value = {value} className="tag"></input>
+          <button className="glow-on-hover">Enter!</button>
         </div>
       </form>
       <hr />
-      <h4>Ready to pick a Winner</h4>
-      <button onClick = {pickWinner}>Pick</button>
+      <div >
+        <h4>Ready to pick a Winner</h4>
+        <button onClick = {pickWinner} className="glow-on-hover" type="button">Pick</button>
+      </div>
+      
       <hr />
       <h3>{message}</h3>
     </div>
